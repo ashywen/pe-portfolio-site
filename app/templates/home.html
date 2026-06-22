@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="profile-h1">About Me</h1>
+
+<h2 class="nav-bar">Introduction</h2>
+{% for me in about_me %}
+    <div class="nav-content">
+        <img src="{{ url_for('static', filename='img/MyPhoto.jpg') }}" class="profile-img">
+        <p>{{ me.about }}</p>
+    </div>
+{% endfor %}
+
+
+<h2 class="nav-bar">Work Experience</h2>
+{% for job in work %}
+    <div class="nav-content">
+        <h3>{{ job.role }}</h3>
+        <p>{{ job.company }}</p>
+        <p>{{ job.description }}</p>
+    </div>
+{% endfor %}
+
+<h2 class="nav-bar">Education</h2>
+{% for edu in education %}
+    <div class="nav-content">
+        <h3>{{ edu.school }}</h3>
+        <p>{{ edu.program }} - {{ edu.year }}</p>
+    </div>
+{% endfor %}
+
+<h2 class="nav-bar">Places I travelled</h2>
+{% for place in travel %}
+    <div class="nav-content">
+        <h3>{{ place.name }}</h3>
+        {% for image in place.images %}
+            <img src="{{ url_for('static', filename='img/' + image) }}" class="travel-img">
+        {% endfor %}
+    </div>
+{% endfor %}
+
+{% endblock %}
