@@ -3,7 +3,7 @@ p, h1, h2, h3, h4, h5, h6, button {
 }
 
 body {
-    background-color: #f5f5f9;
+    background-color: #8f64c0;
     background-size: cover;
     width: auto; 
     overflow-x: hidden;
@@ -14,7 +14,7 @@ body {
 .nav-bar {
     width: 100%;
     display: inline-block;
-    background-color: #1C539F;
+    background-color: #8f64c0;
     font-family: "Roboto", serif;
     font-weight: 700 !important;
     padding-top: 10px;
@@ -50,24 +50,20 @@ body {
 }
 
 .profile {
-    background-color: #1d539f !important;
+    background-color: #8f64c0 !important;
     text-align: center;
     height: 320px;
     margin-bottom: 50px;
 }
 
-.profile h1 {
+.profile-h1 {
         font-size: 50px;
         font-weight: 700;
-        color: white;
+        color: #ffffff;
 }
 
-.profile img {
-        border-radius: 50%;
-        max-width: 100%;
-        max-height: 100%;
-        margin-left: auto;
-        margin-right: auto;
+.profile-img {
+        width: 100px;
         display: block;        
         padding: 20px;
 }
@@ -80,7 +76,7 @@ body {
 .banner {
     padding: 20px 0px 50px 0px;
     height: 150px;
-    background-color: #1d539f;
+    background-color: #ffffff;
 }
 
 .banner .logo {
@@ -94,4 +90,16 @@ body {
     color: white;
     font-size: 50px;
     font-weight: 700;
+}
+
+.hobby-img {
+    width: 200px;
+    height: auto;
+    object-fit: cover;
+}
+
+.travel-img {
+    width: 500px;
+    height: auto;
+    object-fit: cover;
 }
