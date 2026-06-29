@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
+<section class="page-card">
+    <h1 class="page-title">My Hobbies</h1>
+    <p class="page-subtitle">A small look into the things I enjoy most.</p>
 
-<h1>My Hobbies</h1>
-
-{% for hobby in hobbies %}
-    <div>
-        <h3 class="nav-bar">{{ hobby.name }}</h3>
-        {% for image in hobby.images %}
-            <img src="{{ url_for('static', filename='img/' + image) }}" class="hobby-img">
+    <div class="gallery">
+        {% for hobby in hobbies %}
+            <article class="info-card hobby-card">
+                <h2>{{ hobby.name }}</h2>
+                <div class="gallery-images">
+                    {% for image in hobby.images %}
+                        <img src="{{ url_for('static', filename='img/' + image) }}" alt="{{ hobby.name }}" class="hobby-img">
+                    {% endfor %}
+                </div>
+            </article>
         {% endfor %}
     </div>
-{% endfor %}
-
+</section>
 {% endblock %}
 

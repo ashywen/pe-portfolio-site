@@ -1,7 +1,7 @@
 about_me = [
     {
-        "about": "Hi! My name is Ashley. I am passionate about technology, creativity, and continuous growth. This portfolio shows a bit about who I am, what I seek in my life.",
-        "images": ["MyPhoto.jpg"]
+        "about": "Hi! My name is Ashley. I am passionate about technology, creativity, and continuous growth.",
+        "images": ["default/logo.jpeg"]
     }
 ]
 
@@ -9,7 +9,7 @@ work_experience = [
     {
         "role": "Web Developer Intern",
         "company": "Startup Company",
-        "description": "Built CMS-based websites and improved UI components."
+        "description": "Built CMS-based websites and improved UI components for the soft launch of a AI product."
     }
 ]
 

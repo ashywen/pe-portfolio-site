@@ -1,43 +1,62 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<h1 class="profile-h1">About Me</h1>
-
-<h2 class="nav-bar">Introduction</h2>
-{% for me in about_me %}
-    <div class="nav-content">
-        <img src="{{ url_for('static', filename='img/MyPhoto.jpg') }}" class="profile-img">
-        <p>{{ me.about }}</p>
-    </div>
-{% endfor %}
-
-
-<h2 class="nav-bar">Work Experience</h2>
-{% for job in work %}
-    <div class="nav-content">
-        <h3>{{ job.role }}</h3>
-        <p>{{ job.company }}</p>
-        <p>{{ job.description }}</p>
-    </div>
-{% endfor %}
-
-<h2 class="nav-bar">Education</h2>
-{% for edu in education %}
-    <div class="nav-content">
-        <h3>{{ edu.school }}</h3>
-        <p>{{ edu.program }} - {{ edu.year }}</p>
-    </div>
-{% endfor %}
-
-<h2 class="nav-bar">Places I travelled</h2>
-{% for place in travel %}
-    <div class="nav-content">
-        <h3>{{ place.name }}</h3>
-        {% for image in place.images %}
-            <img src="{{ url_for('static', filename='img/' + image) }}" class="travel-img">
+<section class="hero-card">
+    <div class="hero-copy">
+        <p class="eyebrow">Portfolio</p>
+        <h1 class="profile-h1">About Me</h1>
+        {% for me in about_me %}
+            <p class="intro-text">{{ me.about }}</p>
         {% endfor %}
     </div>
-{% endfor %}
+    <div class="hero-media">
+        <img src="{{ url_for('static', filename='img/default/logo.jpeg') }}" alt="Profile photo">
+    </div>
+</section>
 
+<div class="card-grid">
+    <section class="info-card">
+        <h2>Work Experience</h2>
+        {% for job in work %}
+            <div class="card-item">
+                <h3>{{ job.role }}</h3>
+                <p class="muted">{{ job.company }}</p>
+                <p>{{ job.description }}</p>
+            </div>
+        {% endfor %}
+    </section>
+
+    <section class="info-card">
+        <h2>Education</h2>
+        {% for edu in education %}
+            <div class="card-item">
+                <h3>{{ edu.school }}</h3>
+                <p class="muted">{{ edu.program }} - {{ edu.year }}</p>
+            </div>
+        {% endfor %}
+    </section>
+
+    <section class="info-card">
+        <h2>Hobbies</h2>
+        <p class="muted">A few things I enjoy outside of school and work.</p>
+        <ul class="card-list">
+            {% for hobby in hobbies %}
+                <li>{{ hobby.name }}</li>
+            {% endfor %}
+        </ul>
+        <a class="card-link" href="{{ url_for('hobbies_page') }}">View more</a>
+    </section>
+
+    <section class="info-card">
+        <h2>Travel</h2>
+        {% for place in travel %}
+            <div class="card-item">
+                <h3>{{ place.name }}</h3>
+                {% for image in place.images %}
+                    <img src="{{ url_for('static', filename='img/' + image) }}" class="travel-img" alt="Travel map">
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </section>
+</div>
 {% endblock %}
