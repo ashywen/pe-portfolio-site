@@ -1,6 +1,6 @@
 about_me = [
     {
-        "about": "Hi! My name is Ashley. I am passionate about technology, creativity, and continuous growth.",
+        "about": "Hi! My name is Ashley. I am passionate about technology and business, creating modernized solutions to existing systems.",
         "images": ["default/logo.jpeg"]
     }
 ]
