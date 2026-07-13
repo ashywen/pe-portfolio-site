@@ -55,5 +55,6 @@ travel = [
 
 pages = [
     {"name": "Home", "endpoint": "home"},
-    {"name": "Hobbies", "endpoint": "hobbies_page"}
+    {"name": "Hobbies", "endpoint": "hobbies_page"},
+    {"name": "Timeline", "endpoint": "timeline"}
 ]

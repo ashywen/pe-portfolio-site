@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-card">
+    <h1 class="page-title">Timeline</h1>
+    <p class="page-subtitle">Share a quick note and browse the latest posts.</p>
+
+    <form id="timeline-form" class="timeline-form">
+        <div class="form-row">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required>
+        </div>
+        <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+        </div>
+        <div class="form-row">
+            <label for="content">Message</label>
+            <textarea id="content" name="content" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="timeline-submit">Post to Timeline</button>
+    </form>
+
+    <p id="form-message" class="form-message" aria-live="polite"></p>
+    <div id="timeline-posts" class="timeline-list"></div>
+</section>
+
+<script>
+    const form = document.getElementById('timeline-form');
+    const message = document.getElementById('form-message');
+    const postsContainer = document.getElementById('timeline-posts');
+
+    function formatDate(value) {
+        if (!value) return '';
+        const date = new Date(value);
+        return date.toLocaleString([], {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+        });
+    }
+
+    function renderPosts(posts) {
+        const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        if (!sortedPosts.length) {
+            postsContainer.innerHTML = '<div class="timeline-empty">No posts yet. Be the first to share something.</div>';
+            return;
+        }
+
+        postsContainer.innerHTML = sortedPosts.map((post) => `
+            <article class="timeline-post">
+                <div class="timeline-meta">
+                    <strong>${post.name}</strong>
+                    <span class="timeline-date">${formatDate(post.created_at)}</span>
+                </div>
+                <p class="timeline-content">${post.content}</p>
+            </article>
+        `).join('');
+    }
+
+    function loadPosts() {
+        fetch('/api/timeline_post')
+            .then((response) => response.json())
+            .then((data) => {
+                renderPosts(data.timeline_posts || []);
+            })
+            .catch(() => {
+                postsContainer.innerHTML = '<div class="timeline-empty">Unable to load posts right now.</div>';
+            });
+    }
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        message.textContent = 'Posting...';
+
+        const formData = new FormData(form);
+
+        fetch('/api/timeline_post', {
+            method: 'POST',
+            body: formData
+        })
+            .then(async (response) => {
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Unable to post right now.');
+                }
+
+                form.reset();
+                message.textContent = 'Post published!';
+                loadPosts();
+            })
+            .catch((error) => {
+                message.textContent = error.message || 'Unable to post right now.';
+            });
+    });
+
+    loadPosts();
+</script>
+{% endblock %}
