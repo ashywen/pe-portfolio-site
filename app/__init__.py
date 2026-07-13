@@ -4,7 +4,9 @@ import datetime
 import pymysql
 pymysql.install_as_MySQLdb()
 
+from playhouse.shortcuts import model_to_dict
 from flask import Flask, render_template
+from flask import request
 from dotenv import load_dotenv
 from peewee import *
 from app.data import work_experience, education, hobbies, pages, about_me, travel
