@@ -39,9 +39,9 @@ class TimelinePost(Model):
         database = mydb
 
 
-if os.getenv("TESTING") != "true":
-    mydb.connect()
-    mydb.create_tables([TimelinePost])
+# if os.getenv("TESTING") != "true":
+mydb.connect()
+mydb.create_tables([TimelinePost])
 
 
 @app.route('/')
