@@ -1,20 +1,9 @@
 #!/bin/bash
 
-echo "Moving into project directory..."
 cd ~/pe-portfolio-site
 
-echo "Pulling latest code from GitHub..."
-git fetch origin
-git reset --hard origin/main
+git fetch && git reset origin/main --hard
 
-echo "Activating virtual environment..."
-source python3-virtualenv/bin/activate
+docker compose -f docker-compose.prod.yml down
 
-echo "Installing dependencies..."
-pip install -r requirements.txt
-
-echo "Update service"
-systemctl daemon-reload
-systemctl restart myportfolio
-
-echo "Redeploy complete."
+docker compose -f docker-compose.prod.yml up -d --build
