@@ -31,7 +31,7 @@ services:
       - "443:443" 
     volumes:
       - nginx_secrets:/etc/letsencrypt
-      - ./user.conf.d:/etc/nginx/conf.d
+      - ./user_conf.d:/etc/nginx/conf.d
     depends_on:
       - myportfolio
 
