@@ -20,7 +20,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: jonasal/nginx/user_conf.d
+    image: jonasal/nginx-certbot
     restart: always
     environment:
       - CERTBOT_EMAIL=adeng.canada06@gmail.com
