@@ -1,6 +1,6 @@
 about_me = [
     {
-        "about": "Hi! My name is Ashley. I am passionate about technology and business, creating modernized solutions to existing systems.",
+        "about": "I'm Ashley, a third-year Business & Computer Science student who works at the intersection of product, data, and engineering. I've built dashboards for government executives, launched marketing campaigns for early-stage startups, and shipped hackathon MVPs in under 36 hours — I like projects where I can move between the why and the how. Currently learning production engineering fundamentals through the MLH Fellowship.",
         "images": ["default/logo.jpeg"]
     }
 ]
@@ -8,21 +8,32 @@ about_me = [
 work_experience = [
     {
         "role": "Web Developer Intern",
-        "company": "Startup Company",
+        "company": "Web Industrial Solutions",
         "description": "Built CMS-based websites and improved UI components for the soft launch of a AI product."
+    },
+    {
+        "role": "IT Intern",
+        "company": "Ontario Public Service (OPS)",
+        "description": "Designed and built 6 Power BI dashboards across executive, director, and operational reporting tiers — including a Benefits Realization dashboard supporting ~$100M in operations decisions."
+    },
+    {
+        "role": "Production Engineering Fellow",
+        "company": "Major League Hacking (MLH) Fellowship",
+        "description": "Selected for a competitive fellowship alongside 15 fellows to learn production engineering fundamentals — containerization (Docker), VPS deployment (DigitalOcean), databases, encryption, and server maintenance."
     }
 ]
+
 
 education = [
     {
         "school": "Ivey Business School",
-        "program": "Business Administration",
+        "program": "Honors Specialization in Business Administration",
         "year": "3rd Year"
     },
     
     {
         "school": "Western University",
-        "program": "Computer Science",
+        "program": "Major in Computer Science",
         "year": "1st and 2nd Year"
     }
 ]
