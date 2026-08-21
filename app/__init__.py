@@ -109,9 +109,7 @@ def timeline():
 @app.route('/health')
 def health():
     try:
-        cursor = mysql_connection.cursor()
-        cursor.execute("SELECT 1")
-        cursor.fetchone()
+        mydb.execute_sql("SELECT 1")
         return {"status": "ok", "mysql": "connected"}, 200
     except Exception as e:
         return {"status": "error", "mysql": str(e)}, 500
