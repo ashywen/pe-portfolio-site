@@ -105,3 +105,13 @@ def timeline():
         url=os.getenv("URL"),
         pages=pages
     )
+
+@app.route('/health')
+def health():
+    try:
+        cursor = mysql_connection.cursor()
+        cursor.execute("SELECT 1")
+        cursor.fetchone()
+        return {"status": "ok", "mysql": "connected"}, 200
+    except Exception as e:
+        return {"status": "error", "mysql": str(e)}, 500
