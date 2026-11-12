@@ -3,10 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ profile.name }} | {{ profile.tagline }}">
-    <meta property="og:title" content="{{ profile.name }} | Portfolio">
+    <meta name="description" content="{{ profile.full_name }} | {{ profile.tagline }}">
+    <meta name="color-scheme" content="dark light">
+    <meta property="og:title" content="{{ profile.full_name }} | Portfolio">
     <meta property="og:description" content="{{ profile.intro }}">
     <meta property="og:url" content="{{ url }}">
+
+    <script>
+        // Apply the saved theme before first paint to avoid a flash.
+        (function () {
+            var mode = null, palette = null;
+            try {
+                mode = localStorage.getItem('theme-mode');
+                palette = localStorage.getItem('theme-palette');
+            } catch (e) {}
+            if (mode !== 'light' && mode !== 'dark') {
+                mode = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            if (palette !== 'gray') palette = 'lavender';
+            document.documentElement.setAttribute('data-theme', mode);
+            document.documentElement.setAttribute('data-palette', palette);
+        })();
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,13 +32,13 @@
 
     <link rel="icon" href="{{ url_for('static', filename='img/default/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <title>{{ title }} | {{ profile.name }}</title>
+    <title>{{ title }} | {{ profile.full_name }}</title>
 </head>
 
 <body>
     <header class="site-header">
         <div class="nav-content">
-            <a class="brand" href="{{ url_for('home') }}">{{ profile.name }}</a>
+            <a class="brand" href="{{ url_for('home') }}">{{ profile.full_name }}</a>
             <nav class="top-nav" aria-label="Main">
                 <a class="nav-link" href="{{ url_for('home') }}#about">[About]</a>
                 <a class="nav-link" href="{{ url_for('home') }}#experience">[Experience]</a>
@@ -33,6 +51,15 @@
                 {% endif %}
                 <a class="nav-link" href="#contact">[Contact]</a>
             </nav>
+            <div class="theme-controls">
+                <button type="button" class="theme-btn" id="palette-toggle" aria-label="Switch colour palette" title="Switch colour palette">
+                    <span class="swatch" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="theme-btn" id="mode-toggle" aria-label="Switch light or dark mode" title="Switch light / dark mode">
+                    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z"/></svg>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -58,7 +85,42 @@
             </a>
             {% endif %}
         </div>
-        <p class="footer-note">&copy; {{ profile.name }} | Personal Portfolio</p>
+        <p class="footer-note">&copy; {{ profile.full_name }} | Personal Portfolio</p>
     </footer>
+
+    <script>
+        (function () {
+            var root = document.documentElement;
+            var modeBtn = document.getElementById('mode-toggle');
+            var paletteBtn = document.getElementById('palette-toggle');
+
+            function save(key, value) {
+                try { localStorage.setItem(key, value); } catch (e) {}
+            }
+
+            function sync() {
+                var dark = root.getAttribute('data-theme') === 'dark';
+                var gray = root.getAttribute('data-palette') === 'gray';
+                modeBtn.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+                paletteBtn.title = gray ? 'Switch to lavender' : 'Switch to gray';
+            }
+
+            modeBtn.addEventListener('click', function () {
+                var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', next);
+                save('theme-mode', next);
+                sync();
+            });
+
+            paletteBtn.addEventListener('click', function () {
+                var next = root.getAttribute('data-palette') === 'gray' ? 'lavender' : 'gray';
+                root.setAttribute('data-palette', next);
+                save('theme-palette', next);
+                sync();
+            });
+
+            sync();
+        })();
+    </script>
 </body>
 </html>

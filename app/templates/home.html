@@ -37,8 +37,8 @@
 <section class="section" id="experience">
     {{ string_art('art-left') }}
     <div class="section-inner">
-        <p class="section-label"><span>[Experiences]</span></p>
-        <h2 class="section-title">Professional Experiences</h2>
+        <p class="section-label"><span>[Experience]</span></p>
+        <h2 class="section-title">Professional Experience</h2>
 
         <ol class="timeline">
             {% for job in work %}
@@ -46,10 +46,10 @@
                 <div class="tl-logo" aria-hidden="true">{{ job.company[:1] }}</div>
                 <div class="tl-body">
                     <h3>[{{ job.role }} @ {{ job.company }}]</h3>
-                    {% if job.dates %}<p class="tl-dates">({{ job.dates }})</p>{% endif %}
+                    {% if job.dates %}<p class="tl-dates">({{ job.dates }}){% if job.location %} · {{ job.location }}{% endif %}</p>{% endif %}
                     <p>{{ job.description }}</p>
                     {% if job.highlights %}
-                        <h4>Responsibilities</h4>
+                        <h4>Key Contributions</h4>
                         <ul>
                             {% for item in job.highlights %}<li>{{ item }}</li>{% endfor %}
                         </ul>
@@ -67,6 +67,11 @@
                 <div class="tl-body">
                     <h3>[{{ edu.program }} @ {{ edu.school }}]</h3>
                     <p class="tl-dates">({{ edu.year }})</p>
+                    {% if edu.highlights %}
+                        <ul>
+                            {% for item in edu.highlights %}<li>{{ item }}</li>{% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </li>
             {% endfor %}
@@ -82,9 +87,10 @@
 
         <div class="project-grid">
             {% for project in projects %}
-            <article class="project-card">
+            <article class="project-card{% if project.coming_soon %} project-card--soon{% endif %}">
                 <div class="project-text">
-                    <h3>[{{ project.name }}]</h3>
+                    <h3>[{{ project.name }}]{% if project.coming_soon %} <span class="badge">Coming Soon</span>{% endif %}</h3>
+                    {% if project.meta %}<p class="project-meta">{{ project.meta }}</p>{% endif %}
                     <p>{{ project.description }}</p>
                     {% if project.tech %}
                         <p class="project-tech"><strong>Tech Stack:</strong><br>{{ project.tech }}</p>
@@ -92,6 +98,7 @@
                     <div class="project-actions">
                         {% if project.live %}<a class="btn-solid" href="{{ project.live }}" target="_blank" rel="noopener">View Live</a>{% endif %}
                         {% if project.github %}<a class="btn-solid" href="{{ project.github }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+                        {% if project.devpost %}<a class="btn-solid" href="{{ project.devpost }}" target="_blank" rel="noopener">Devpost</a>{% endif %}
                     </div>
                 </div>
                 {% if project.image %}
@@ -99,7 +106,6 @@
                 {% endif %}
             </article>
             {% endfor %}
-            <div class="project-card project-card--placeholder">[Upcoming Project...]</div>
             <div class="project-card project-card--placeholder">+ Adding More Soon</div>
         </div>
     </div>
