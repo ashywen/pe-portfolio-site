@@ -1,9 +1,13 @@
 {% extends "base.html" %}
+{% from "_macros.html" import string_art %}
 
 {% block content %}
-<section class="page-card">
-    <h1 class="page-title">Timeline</h1>
-    <p class="page-subtitle">Share a quick note and browse the latest posts.</p>
+<section class="section section--page">
+    {{ string_art('art-left') }}
+    <div class="section-inner section-inner--narrow">
+    <p class="section-label"><span>[Guestbook]</span></p>
+    <h1 class="section-title">Timeline</h1>
+    <p class="section-sub">Share a quick note and browse the latest posts.</p>
 
     <form id="timeline-form" class="timeline-form">
         <div class="form-row">
@@ -18,17 +22,24 @@
             <label for="content">Message</label>
             <textarea id="content" name="content" rows="4" required></textarea>
         </div>
-        <button type="submit" class="timeline-submit">Post to Timeline</button>
+        <button type="submit" class="btn-solid">Post to Timeline</button>
     </form>
 
     <p id="form-message" class="form-message" aria-live="polite"></p>
     <div id="timeline-posts" class="timeline-list"></div>
+    </div>
 </section>
 
 <script>
     const form = document.getElementById('timeline-form');
     const message = document.getElementById('form-message');
     const postsContainer = document.getElementById('timeline-posts');
+
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, (c) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+    }
 
     function formatDate(value) {
         if (!value) return '';
@@ -53,10 +64,10 @@
         postsContainer.innerHTML = sortedPosts.map((post) => `
             <article class="timeline-post">
                 <div class="timeline-meta">
-                    <strong>${post.name}</strong>
+                    <strong>${escapeHtml(post.name)}</strong>
                     <span class="timeline-date">${formatDate(post.created_at)}</span>
                 </div>
-                <p class="timeline-content">${post.content}</p>
+                <p class="timeline-content">${escapeHtml(post.content)}</p>
             </article>
         `).join('');
     }
@@ -83,9 +94,10 @@
             body: formData
         })
             .then(async (response) => {
-                const data = await response.json();
                 if (!response.ok) {
-                    throw new Error(data.error || 'Unable to post right now.');
+                    // The API returns plain-text errors like "Invalid email".
+                    const text = await response.text();
+                    throw new Error(text || 'Unable to post right now.');
                 }
 
                 form.reset();

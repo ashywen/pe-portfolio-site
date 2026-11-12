@@ -1,22 +1,24 @@
 {% extends "base.html" %}
+{% from "_macros.html" import string_art %}
 
 {% block content %}
-<section class="page-card">
-    <h1 class="page-title">My Hobbies</h1>
-    <p class="page-subtitle">A small look into the things I enjoy most.</p>
+<section class="section section--page">
+    {{ string_art('art-right') }}
+    <div class="section-inner">
+        <p class="section-label"><span>[Hobbies]</span></p>
+        <h1 class="section-title">My Hobbies</h1>
+        <p class="section-sub">A small look into the things I enjoy most.</p>
 
-    <div class="gallery">
         {% for hobby in hobbies %}
-            <article class="info-card hobby-card">
-                <h2>{{ hobby.name }}</h2>
-                <div class="gallery-images">
-                    {% for image in hobby.images %}
-                        <img src="{{ url_for('static', filename='img/' + image) }}" alt="{{ hobby.name }}" class="hobby-img">
-                    {% endfor %}
-                </div>
-            </article>
+        <article class="panel hobby-block">
+            <h2>[{{ hobby.name }}]</h2>
+            <div class="gallery">
+                {% for image in hobby.images %}
+                    <img src="{{ url_for('static', filename='img/' + image) }}" alt="{{ hobby.name }}" class="hobby-img" loading="lazy">
+                {% endfor %}
+            </div>
+        </article>
         {% endfor %}
     </div>
 </section>
 {% endblock %}
-

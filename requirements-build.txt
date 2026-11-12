@@ -1,0 +1,10 @@
+# Minimal dependencies for build_static.py (used by Cloudflare Pages).
+Flask==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+Werkzeug==2.0.1
+itsdangerous==2.0.1
+click==8.0.1
+peewee==3.14.10
+PyMySQL==1.0.2
+python-dotenv==0.17.1

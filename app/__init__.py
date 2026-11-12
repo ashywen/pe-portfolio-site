@@ -10,7 +10,7 @@ from flask import Flask, render_template
 from flask import request
 from dotenv import load_dotenv
 from peewee import *
-from app.data import work_experience, education, hobbies, pages, about_me, travel
+from app.data import work_experience, education, hobbies, pages, about_me, travel, profile, contact, projects
 
 load_dotenv()
 app = Flask(__name__)
@@ -44,6 +44,11 @@ mydb.connect()
 mydb.create_tables([TimelinePost])
 
 
+@app.context_processor
+def inject_site_data():
+    return dict(profile=profile, contact=contact, pages=pages)
+
+
 @app.route('/')
 def home():
     return render_template(
@@ -54,6 +59,8 @@ def home():
         work=work_experience,
         education=education,
         travel=travel,
+        hobbies=hobbies,
+        projects=projects,
         pages=pages
     )
 

@@ -77,3 +77,21 @@ You'll now be able to access the website at `localhost:5000` or `127.0.0.1:5000`
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
+## Deploying to Cloudflare Pages (free)
+
+Cloudflare Pages hosts static files, so `build_static.py` renders the Flask pages to plain HTML in `build/`.
+The timeline API runs as a Pages Function (`functions/api/timeline_post.js`) backed by a free Cloudflare D1 database.
+
+Cloudflare Pages build settings:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `pip install -r requirements-build.txt && python build_static.py` |
+| Build output directory | `build` |
+| Environment variable | `PYTHON_VERSION` = `3.11` |
+
+D1 setup: create a database, run `schema.sql` in its Console, then bind it to the Pages project as `DB`
+(Settings → Bindings → D1 database), and redeploy.
+
+Preview the static build locally with `python build_static.py`, then open `build/index.html`.
